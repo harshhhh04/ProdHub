@@ -24,18 +24,16 @@ export const KnowledgeView: React.FC = () => {
 
   const categories = [
     'ALL',
-    'RTOS',
-    'BLE',
-    'Embedded C',
-    'Power Management',
-    'Battery',
+    'Embedded Systems',
     'Firmware',
+    'RTOS',
+    'Embedded C',
+    'Communication Protocols',
+    'Power Management',
     'Debugging',
-    'Interview Questions',
-    'Sentinel',
-    'SAP',
-    'Book Notes',
-    'Random Ideas'
+    'Interview Notes',
+    'Research Notes',
+    'Book Notes'
   ];
 
   const filteredNotes = notes.filter(n => {
@@ -89,7 +87,7 @@ export const KnowledgeView: React.FC = () => {
             <h1 className="text-xl font-bold text-zinc-100 tracking-tight">Knowledge Vault</h1>
           </div>
           <p className="text-xs text-zinc-400 mt-0.5">
-            Searchable engineering second brain. Code snippets, memory maps, protocol specs.
+            Searchable engineering knowledge base. Code snippets, memory maps, protocol specs.
           </p>
         </div>
 
@@ -133,7 +131,7 @@ export const KnowledgeView: React.FC = () => {
         ))}
       </div>
 
-      {/* Vault Grid: Note List (1/3), Note Renderer/Editor (2/3) */}
+      {/* Vault Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column: Notes List */}
         <div className="space-y-2.5 max-h-[70vh] overflow-y-auto pr-1">
@@ -181,7 +179,6 @@ export const KnowledgeView: React.FC = () => {
         <div className="lg:col-span-2">
           {activeNote ? (
             <div className="bg-zinc-950 border border-zinc-800 rounded-xl p-6 shadow-xl space-y-5">
-              {/* Note Header Controls */}
               <div className="flex items-center justify-between border-b border-zinc-800 pb-4">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
@@ -214,15 +211,12 @@ export const KnowledgeView: React.FC = () => {
                 </div>
               </div>
 
-              {/* Note Content (Viewer or Editor) */}
               {!isEditing ? (
                 <div className="space-y-4">
-                  {/* Rendered Note Content */}
                   <div className="prose prose-invert max-w-none text-xs text-zinc-300 space-y-3 font-sans leading-relaxed whitespace-pre-wrap">
                     {activeNote.content}
                   </div>
 
-                  {/* Code snippet quick copy helper */}
                   <div className="p-3 bg-zinc-900 border border-zinc-800 rounded-lg flex items-center justify-between font-mono text-xs">
                     <div className="flex items-center gap-2 text-zinc-400">
                       <Code className="w-4 h-4 text-cyan-400" />
@@ -237,7 +231,6 @@ export const KnowledgeView: React.FC = () => {
                     </button>
                   </div>
 
-                  {/* Tags & Backlinks */}
                   <div className="pt-3 border-t border-zinc-800 flex items-center justify-between text-xs font-mono">
                     <div className="flex items-center gap-1 text-zinc-400">
                       <Tag className="w-3.5 h-3.5 text-cyan-400" />
@@ -251,7 +244,6 @@ export const KnowledgeView: React.FC = () => {
                   </div>
                 </div>
               ) : (
-                /* Note Editor Form */
                 <div className="space-y-4">
                   <textarea
                     rows={16}
@@ -295,7 +287,7 @@ export const KnowledgeView: React.FC = () => {
                 <input
                   type="text"
                   required
-                  placeholder="e.g. ARM Cortex-M NVIC Interrupt Priorities"
+                  placeholder="e.g. Memory Map Architecture"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   className="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-2 text-zinc-100 focus:outline-none focus:border-cyan-500 font-sans"
@@ -319,7 +311,7 @@ export const KnowledgeView: React.FC = () => {
                 <label className="font-mono text-zinc-400 uppercase text-[10px]">Tags (comma separated)</label>
                 <input
                   type="text"
-                  placeholder="RTOS, Mutex, ARM, Interview"
+                  placeholder="RTOS, Mutex, Firmware, Interview"
                   value={tagsStr}
                   onChange={(e) => setTagsStr(e.target.value)}
                   className="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-2 text-zinc-100 font-mono focus:outline-none focus:border-cyan-500"

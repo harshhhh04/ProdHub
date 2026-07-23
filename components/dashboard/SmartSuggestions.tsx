@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useStore } from '@/lib/store/useStore';
-import { AlertTriangle, Info, ShieldAlert, Cpu } from 'lucide-react';
+import { AlertTriangle, Info, Cpu } from 'lucide-react';
 
 export const SmartSuggestions: React.FC = () => {
   const { mode, missions, projects, books, applications } = useStore();
@@ -10,48 +10,52 @@ export const SmartSuggestions: React.FC = () => {
   const generateSuggestions = () => {
     const list: { id: string; type: 'warning' | 'info'; text: string }[] = [];
 
-    // Heuristics 1: Placement mode check
-    if (mode === 'placement') {
-      const interviewApps = applications.filter(a => a.status === 'Interview' || a.status === 'OA');
-      if (interviewApps.length > 0) {
-        list.push({
-          id: 'sug-1',
-          type: 'warning',
-          text: `${interviewApps[0].company} ${interviewApps[0].status} process active (${interviewApps[0].role}). Prioritize RTOS and Embedded C flashcard revisions.`
-        });
-      }
+    // Generic suggestion 1: High priority mission status
+    const highPriorityMissions = missions.filter(m => m.priority === 'P0' && m.status === 'in_progress');
+    if (highPriorityMissions.length > 0) {
+      list.push({
+        id: 'sug-1',
+        type: 'warning',
+        text: 'A high priority mission hasn\'t been updated recently.'
+      });
     }
 
-    // Heuristics 2: Inactive project check
-    const rtosProject = projects.find(p => p.slug === 'rtos');
-    if (rtosProject && rtosProject.progress < 100) {
+    // Generic suggestion 2: Active project notice
+    const activeProject = projects.find(p => p.status === 'active');
+    if (activeProject) {
       list.push({
         id: 'sug-2',
         type: 'info',
-        text: 'RTOS Priority Inversion Mutex milestone incomplete. 2 pending DOD subtasks remaining.'
+        text: 'One project has been inactive for several days.'
       });
     }
 
-    // Heuristics 3: Mission completion velocity
+    // Generic suggestion 3: Mission completion velocity
     const completedCount = missions.filter(m => m.status === 'completed').length;
     const totalMissions = missions.length;
-    if (totalMissions > 6 && completedCount < totalMissions * 0.5) {
-      list.push({
-        id: 'sug-3',
-        type: 'info',
-        text: `Velocity notice: You planned ${totalMissions} missions this week. Historical completion rate targets ~60%. Avoid over-commitment.`
-      });
-    }
+    const completionPct = totalMissions > 0 ? Math.round((completedCount / totalMissions) * 100) : 70;
+    list.push({
+      id: 'sug-3',
+      type: 'info',
+      text: `Your weekly goals are ${completionPct}% complete.`
+    });
 
-    // Heuristics 4: Reading progress
+    // Generic suggestion 4: Reading progress
     const activeBooks = books.filter(b => b.status === 'reading');
-    if (activeBooks.length > 0 && activeBooks[0].progressPercent < 90) {
+    if (activeBooks.length > 0) {
       list.push({
         id: 'sug-4',
         type: 'info',
-        text: `Reading pace: "${activeBooks[0].title}" is at ${activeBooks[0].progressPercent}%. Extract key takeaways into Knowledge Vault.`
+        text: 'Your reading progress has slowed this week.'
       });
     }
+
+    // Generic suggestion 5: Deep work prompt
+    list.push({
+      id: 'sug-5',
+      type: 'info',
+      text: 'Consider scheduling another deep work session.'
+    });
 
     return list;
   };

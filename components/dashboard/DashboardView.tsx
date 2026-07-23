@@ -7,18 +7,13 @@ import { SmartSuggestions } from './SmartSuggestions';
 import { NavTab } from '../layout/Sidebar';
 import {
   Play,
-  Calendar,
   Clock,
   Briefcase,
   Target,
   FolderGit2,
   BookMarked,
   Activity,
-  Flame,
-  ChevronRight,
-  Shield,
-  Zap,
-  CheckSquare
+  ChevronRight
 } from 'lucide-react';
 
 interface DashboardViewProps {
@@ -44,9 +39,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ setActiveTab, onOp
   // Filter projects depending on Placement vs Builder mode
   const displayedProjects = projects.filter(p => {
     if (mode === 'placement') {
-      return p.category === 'internship' || p.slug === 'rtos' || p.slug === 'sap-revision';
+      return p.category === 'internship' || p.slug === 'core-systems' || p.slug === 'research-project';
     } else {
-      return p.slug === 'sentinel' || p.category === 'freelance' || p.category === 'core';
+      return p.slug === 'personal-project' || p.category === 'freelance' || p.category === 'core';
     }
   });
 
@@ -64,16 +59,16 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ setActiveTab, onOp
               SYSTEM MODE: {mode.toUpperCase()}
             </span>
             <span className="text-xs text-zinc-500 font-mono">
-              • Placement Target: Oct 2026
+              • Target Review Window: Active
             </span>
           </div>
           <h1 className="text-2xl font-bold text-zinc-100 tracking-tight">
-            {mode === 'placement' ? 'Placement Prep & High-Priority Firmware Command' : 'Engineering System & Builder Lab'}
+            {mode === 'placement' ? 'Technical Preparation & High-Priority Command' : 'Engineering System & Development Lab'}
           </h1>
           <p className="text-xs text-zinc-400 mt-1">
             {mode === 'placement' 
-              ? 'Focus area: Internship payload module, RTOS kernel synchronization, and Qualcomm/TI interview revision.'
-              : 'Focus area: Sentinel logging framework, custom RTOS extensions, and freelance IoT engineering.'}
+              ? 'Focus area: Professional Work module, core system synchronization, and technical interview revision.'
+              : 'Focus area: Personal project framework, custom kernel extensions, and freelance engineering.'}
           </p>
         </div>
 
@@ -88,18 +83,18 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ setActiveTab, onOp
 
       {/* Top Metric Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        {/* Card 1: Placement Countdown */}
+        {/* Card 1: Placement / Review Countdown */}
         <div className="bg-zinc-950 border border-zinc-800 rounded-xl p-4 flex flex-col justify-between">
           <div className="flex items-center justify-between text-xs text-zinc-400 mb-2">
-            <span className="font-mono uppercase text-[10px]">PLACEMENT PROCESS</span>
+            <span className="font-mono uppercase text-[10px]">TECHNICAL REVIEW PIPELINE</span>
             <Briefcase className="w-4 h-4 text-emerald-400" />
           </div>
           <div>
             <div className="text-2xl font-bold font-mono text-zinc-100">
-              {nextInterview ? `${nextInterview.company}` : '68 Days'}
+              {nextInterview ? `Upcoming Technical Interview` : 'Target Prep Active'}
             </div>
             <div className="text-[11px] text-emerald-400 font-mono mt-0.5 truncate">
-              {nextInterview ? `${nextInterview.status} scheduled` : 'Target prep window active'}
+              {nextInterview ? `${nextInterview.company} • ${nextInterview.status}` : 'Target window active'}
             </div>
           </div>
         </div>
@@ -155,7 +150,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ setActiveTab, onOp
 
       {/* Main Grid: Left Column (Today's Big 3 & Active Missions), Right Column (Suggestions, Projects, Reading) */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left Column (2 Cols wide on lg) */}
+        {/* Left Column */}
         <div className="lg:col-span-2 space-y-6">
           {/* Today's Big 3 */}
           <TodayBigThree />
@@ -221,7 +216,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ setActiveTab, onOp
             </label>
             <textarea
               rows={3}
-              placeholder="Jot down quick thoughts, register offsets, or formulas before moving to Knowledge Vault..."
+              placeholder="Jot down quick thoughts, register offsets, or architecture notes..."
               value={quickNote}
               onChange={(e) => setQuickNote(e.target.value)}
               className="w-full bg-zinc-900 border border-zinc-800 rounded-lg p-3 text-xs text-zinc-100 font-mono focus:outline-none focus:border-emerald-500 resize-none"
@@ -229,7 +224,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ setActiveTab, onOp
           </div>
         </div>
 
-        {/* Right Column (1 Col wide on lg) */}
+        {/* Right Column */}
         <div className="space-y-6">
           {/* Smart Suggestions */}
           <SmartSuggestions />
@@ -240,7 +235,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ setActiveTab, onOp
               <div className="flex items-center gap-2">
                 <FolderGit2 className="w-4 h-4 text-cyan-400" />
                 <h3 className="font-mono font-bold text-xs text-zinc-200 uppercase">
-                  {mode === 'placement' ? 'PLACEMENT PRIORITY PROJECTS' : 'BUILDER LAB PROJECTS'}
+                  {mode === 'placement' ? 'TECHNICAL PRIORITY PROJECTS' : 'DEVELOPMENT LAB PROJECTS'}
                 </h3>
               </div>
               <button

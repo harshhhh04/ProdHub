@@ -53,13 +53,13 @@ export const SundayPlanningModal: React.FC<SundayPlanningModalProps> = ({ isOpen
           <div className="space-y-4">
             <div className="bg-zinc-900/60 p-4 rounded-xl border border-zinc-800 space-y-2">
               <span className="text-[10px] font-mono text-cyan-400 uppercase font-bold flex items-center gap-1">
-                <AlertCircle className="w-3.5 h-3.5" /> Approaching Deadlines & Applications
+                <AlertCircle className="w-3.5 h-3.5" /> Approaching Deadlines & Review Pipeline
               </span>
               <p className="text-xs text-zinc-300">
                 Active System Profile: <strong className="text-emerald-400 font-mono">{mode.toUpperCase()}</strong>.
                 {applications.filter(a => a.status === 'OA' || a.status === 'Interview').length > 0
-                  ? ' Active placement processes require priority flashcard drills.'
-                  : ' Focus on core RTOS & Sentinel project milestones.'}
+                  ? ' Active technical review processes require priority flashcard drills.'
+                  : ' Focus on core project milestones.'}
               </p>
             </div>
 
